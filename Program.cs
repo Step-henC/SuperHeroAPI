@@ -15,6 +15,12 @@ builder.Services.AddCors(options => options.AddPolicy(name: "SuperHeroOrigins",
     {
         policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
     }));
+builder.Services.AddCors(options => options.AddPolicy(name: "SuperHeroUIPHP",
+    policy => {
+
+        policy.WithOrigins("http://localhost/SuperHeroUI.PHP/").AllowAnyMethod().AllowAnyHeader();
+        
+    }));
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

@@ -16,12 +16,23 @@ namespace SuperHeroAPI.Controllers
         }
 
 
-        [HttpGet]  
+        [HttpGet]
         public async Task<ActionResult<List<SuperHero>>> GetSuperHeroes()
         {
             //to get this to work had to remove System.Data.Entity since .NET will default to it
             return Ok(await _dataContext.SuperHeroes.ToListAsync());
         }
+
+        //had to make this method for PHP UI
+        [HttpGet("{id}")]
+        public async Task<ActionResult<SuperHero>> GetSuperHeroById(int id)
+        {
+            var existingHero = await _dataContext.SuperHeroes.FindAsync(id);
+            if (existingHero == null)
+                return BadRequest("Hero not found");
+            return Ok(existingHero);    
+        }
+
 
         [HttpPost]
         public async Task<ActionResult<List<SuperHero>>> CreateSuperHeroes(SuperHero hero)
